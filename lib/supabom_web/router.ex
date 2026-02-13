@@ -30,14 +30,16 @@ defmodule SupabomWeb.Router do
     # Custom sign-in page with playful design
     get "/sign-in", AuthController, :request
     get "/check-email", AuthController, :check_email
-    sign_out_route AuthController
+    sign_out_route(AuthController)
 
-    auth_routes AuthController, Supabom.Accounts.User,
+    auth_routes(AuthController, Supabom.Accounts.User,
       path: "/auth",
       on_success: [
-        {AshAuthentication.Strategy.MagicLink, :request, {SupabomWeb.AuthController, :redirect_to_sign_in}}
+        {AshAuthentication.Strategy.MagicLink, :request,
+         {SupabomWeb.AuthController, :redirect_to_sign_in}}
       ],
       overrides: [SupabomWeb.AuthOverrides, AshAuthentication.Phoenix.Overrides.Default]
+    )
   end
 
   # Protected routes - require authentication

@@ -11,12 +11,12 @@ defmodule SupabomWeb.AuthOverrides do
     end
 
     # Custom sign-in template
-    set :sign_in_page_title, "Complete Sign In"
-    set :sign_in_button_text, "Complete Sign In 🚀"
+    set(:sign_in_page_title, "Complete Sign In")
+    set(:sign_in_button_text, "Complete Sign In 🚀")
   end
 
   # Override the sign-in live view to use our custom template
   override AshAuthentication.Phoenix.SignInLive do
-    set :root_class, "auth-page-custom"
+    set(:root_class, "auth-page-custom")
   end
 end

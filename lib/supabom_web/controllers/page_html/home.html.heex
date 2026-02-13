@@ -1,1079 +1,1093 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SupaBOM - Security Made Delightful (Dark Mode)</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --coral: #ff6b6b;
-      --coral-bright: #ff8787;
-      --mint: #51cf66;
-      --mint-bright: #69db7c;
-      --yellow: #ffd43b;
-      --yellow-bright: #ffe066;
-      --purple: #9775fa;
-      --purple-bright: #b197fc;
-      --blue: #4dabf7;
-      --dark-bg: #1a1625;
-      --dark-surface: #251e35;
-      --dark-elevated: #2f2640;
-      --text: #f8f9fa;
-      --text-dim: #adb5bd;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SupaBOM - Security Made Delightful (Dark Mode)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --coral: #ff6b6b;
+        --coral-bright: #ff8787;
+        --mint: #51cf66;
+        --mint-bright: #69db7c;
+        --yellow: #ffd43b;
+        --yellow-bright: #ffe066;
+        --purple: #9775fa;
+        --purple-bright: #b197fc;
+        --blue: #4dabf7;
+        --dark-bg: #1a1625;
+        --dark-surface: #251e35;
+        --dark-elevated: #2f2640;
+        --text: #f8f9fa;
+        --text-dim: #adb5bd;
+      }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    body {
-      font-family: 'Fredoka', sans-serif;
-      background: var(--dark-bg);
-      color: var(--text);
-      overflow-x: hidden;
-    }
+      body {
+        font-family: 'Fredoka', sans-serif;
+        background: var(--dark-bg);
+        color: var(--text);
+        overflow-x: hidden;
+      }
 
-    .animated-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
+      .animated-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
 
-    .floating-shape {
-      position: absolute;
-      opacity: 0.08;
-      filter: blur(60px);
-      animation: gentleFloat 25s ease-in-out infinite;
-    }
+      .floating-shape {
+        position: absolute;
+        opacity: 0.08;
+        filter: blur(60px);
+        animation: gentleFloat 25s ease-in-out infinite;
+      }
 
-    .shape-1 {
-      width: 300px;
-      height: 300px;
-      background: var(--coral);
-      border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
-      top: 10%;
-      left: 5%;
-      animation-delay: 0s;
-    }
-
-    .shape-2 {
-      width: 250px;
-      height: 250px;
-      background: var(--mint);
-      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-      top: 60%;
-      right: 10%;
-      animation-delay: 5s;
-    }
-
-    .shape-3 {
-      width: 280px;
-      height: 280px;
-      background: var(--purple);
-      border-radius: 41% 59% 42% 58% / 41% 44% 56% 59%;
-      bottom: 15%;
-      left: 15%;
-      animation-delay: 10s;
-    }
-
-    .shape-4 {
-      width: 220px;
-      height: 220px;
-      background: var(--yellow);
-      border-radius: 50%;
-      top: 30%;
-      right: 20%;
-      animation-delay: 15s;
-    }
-
-    @keyframes gentleFloat {
-      0%, 100% {
-        transform: translate(0, 0) rotate(0deg) scale(1);
+      .shape-1 {
+        width: 300px;
+        height: 300px;
+        background: var(--coral);
         border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+        top: 10%;
+        left: 5%;
+        animation-delay: 0s;
       }
-      33% {
-        transform: translate(30px, -30px) rotate(120deg) scale(1.1);
-        border-radius: 41% 59% 42% 58% / 41% 44% 56% 59%;
-      }
-      66% {
-        transform: translate(-20px, 20px) rotate(240deg) scale(0.9);
+
+      .shape-2 {
+        width: 250px;
+        height: 250px;
+        background: var(--mint);
         border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        top: 60%;
+        right: 10%;
+        animation-delay: 5s;
       }
-    }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 30px;
-      position: relative;
-      z-index: 1;
-    }
-
-    header {
-      padding: 30px 0;
-    }
-
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--dark-surface);
-      padding: 20px 35px;
-      border-radius: 60px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 0 3px var(--purple);
-      transform: rotate(-0.5deg);
-      transition: all 0.3s ease;
-      border: 3px solid transparent;
-    }
-
-    nav:hover {
-      transform: rotate(0deg) translateY(-2px);
-      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), 0 0 20px var(--purple);
-      border-color: var(--purple);
-    }
-
-    .logo {
-      font-size: 32px;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--coral) 0%, var(--yellow) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      transform: rotate(2deg);
-      transition: transform 0.3s ease;
-      filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.5));
-    }
-
-    .logo:hover {
-      transform: rotate(-2deg) scale(1.05);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 35px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--text);
-      text-decoration: none;
-      font-size: 16px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      padding: 8px 20px;
-      border-radius: 20px;
-      border: 3px solid transparent;
-      position: relative;
-    }
-
-    .nav-links a:hover {
-      border-color: var(--mint);
-      background: var(--mint);
-      color: var(--dark-bg);
-      transform: rotate(-2deg) scale(1.1);
-      box-shadow: 0 0 20px var(--mint);
-    }
-
-    .hero {
-      padding: 100px 0 80px;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 86px;
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 30px;
-      color: var(--text);
-      position: relative;
-      display: inline-block;
-    }
-
-    .word-bubble {
-      display: inline-block;
-      padding: 15px 35px;
-      margin: 0 10px 15px;
-      border-radius: 35px;
-      border: 4px solid transparent;
-      transform: rotate(-1deg);
-      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      position: relative;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-    }
-
-    .word-bubble::before {
-      content: '';
-      position: absolute;
-      bottom: -15px;
-      left: 30px;
-      width: 0;
-      height: 0;
-      border-left: 15px solid transparent;
-      border-right: 15px solid transparent;
-      border-top: 15px solid transparent;
-    }
-
-    .word-bubble:nth-child(1) {
-      background: var(--coral);
-      color: white;
-      border-color: var(--coral-bright);
-      transform: rotate(2deg);
-      animation: bubbleBounce 3s ease-in-out infinite;
-      animation-delay: 0s;
-      box-shadow: 0 0 40px rgba(255, 107, 107, 0.5);
-    }
-
-    .word-bubble:nth-child(1)::before {
-      border-top-color: var(--coral);
-    }
-
-    .word-bubble:nth-child(2) {
-      background: var(--mint);
-      color: var(--dark-bg);
-      border-color: var(--mint-bright);
-      transform: rotate(-2deg);
-      animation: bubbleBounce 3s ease-in-out infinite;
-      animation-delay: 0.2s;
-      box-shadow: 0 0 40px rgba(81, 207, 102, 0.5);
-    }
-
-    .word-bubble:nth-child(2)::before {
-      border-top-color: var(--mint);
-    }
-
-    .word-bubble:nth-child(3) {
-      background: var(--yellow);
-      color: var(--dark-bg);
-      border-color: var(--yellow-bright);
-      transform: rotate(1deg);
-      animation: bubbleBounce 3s ease-in-out infinite;
-      animation-delay: 0.4s;
-      box-shadow: 0 0 40px rgba(255, 212, 59, 0.5);
-    }
-
-    .word-bubble:nth-child(3)::before {
-      border-top-color: var(--yellow);
-    }
-
-    .word-bubble:hover {
-      transform: rotate(0deg) scale(1.1) translateY(-5px);
-      box-shadow: 0 0 60px currentColor;
-    }
-
-    @keyframes bubbleBounce {
-      0%, 100% {
-        transform: translateY(0) rotate(2deg);
+      .shape-3 {
+        width: 280px;
+        height: 280px;
+        background: var(--purple);
+        border-radius: 41% 59% 42% 58% / 41% 44% 56% 59%;
+        bottom: 15%;
+        left: 15%;
+        animation-delay: 10s;
       }
-      50% {
-        transform: translateY(-10px) rotate(-2deg);
+
+      .shape-4 {
+        width: 220px;
+        height: 220px;
+        background: var(--yellow);
+        border-radius: 50%;
+        top: 30%;
+        right: 20%;
+        animation-delay: 15s;
       }
-    }
 
-    .hero-subtitle {
-      font-size: 24px;
-      line-height: 1.7;
-      max-width: 700px;
-      margin: 0 auto 50px;
-      font-weight: 500;
-      color: var(--text-dim);
-      animation: fadeInUp 0.8s ease-out 0.3s both;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
+      @keyframes gentleFloat {
+        0%, 100% {
+          transform: translate(0, 0) rotate(0deg) scale(1);
+          border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+        }
+        33% {
+          transform: translate(30px, -30px) rotate(120deg) scale(1.1);
+          border-radius: 41% 59% 42% 58% / 41% 44% 56% 59%;
+        }
+        66% {
+          transform: translate(-20px, 20px) rotate(240deg) scale(0.9);
+          border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        }
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 30px;
+        position: relative;
+        z-index: 1;
       }
-    }
 
-    .cta-group {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 80px;
-      animation: fadeInUp 0.8s ease-out 0.5s both;
-    }
-
-    .btn {
-      padding: 18px 45px;
-      font-family: 'Fredoka', sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      border-radius: 30px;
-      text-decoration: none;
-      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      border: 4px solid transparent;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn span {
-      position: relative;
-      z-index: 1;
-    }
-
-    .btn-primary {
-      background: var(--coral);
-      color: white;
-      transform: rotate(-1deg);
-      box-shadow: 0 0 30px rgba(255, 107, 107, 0.5);
-      border-color: var(--coral-bright);
-    }
-
-    .btn-primary:hover {
-      background: var(--coral-bright);
-      transform: rotate(1deg) scale(1.05) translateY(-3px);
-      box-shadow: 0 0 50px rgba(255, 107, 107, 0.8);
-    }
-
-    .btn-secondary {
-      background: var(--dark-surface);
-      color: var(--text);
-      transform: rotate(1deg);
-      border-color: var(--purple);
-      box-shadow: 0 0 30px rgba(151, 117, 250, 0.3);
-    }
-
-    .btn-secondary:hover {
-      background: var(--yellow);
-      color: var(--dark-bg);
-      transform: rotate(-1deg) scale(1.05) translateY(-3px);
-      box-shadow: 0 0 50px rgba(255, 212, 59, 0.8);
-    }
-
-    .friends {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 30px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .friend-card {
-      background: var(--dark-surface);
-      padding: 40px;
-      border-radius: 35px;
-      border: 4px solid transparent;
-      text-align: center;
-      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      transform: rotate(-1deg);
-      position: relative;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
-
-    .friend-card:nth-child(1) {
-      border-color: var(--coral);
-    }
-
-    .friend-card:nth-child(2) {
-      border-color: var(--mint);
-    }
-
-    .friend-card:nth-child(3) {
-      border-color: var(--yellow);
-    }
-
-    .friend-card:nth-child(even) {
-      transform: rotate(1deg);
-    }
-
-    .friend-card:hover {
-      transform: rotate(0deg) translateY(-15px) scale(1.05);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
-    }
-
-    .friend-card:nth-child(1):hover {
-      box-shadow: 0 20px 60px rgba(255, 107, 107, 0.4);
-      border-color: var(--coral-bright);
-    }
-
-    .friend-card:nth-child(2):hover {
-      box-shadow: 0 20px 60px rgba(81, 207, 102, 0.4);
-      border-color: var(--mint-bright);
-    }
-
-    .friend-card:nth-child(3):hover {
-      box-shadow: 0 20px 60px rgba(255, 212, 59, 0.4);
-      border-color: var(--yellow-bright);
-    }
-
-    .friend-icon {
-      font-size: 64px;
-      margin-bottom: 20px;
-      display: inline-block;
-      animation: iconBounce 2s ease-in-out infinite;
-      filter: drop-shadow(0 0 20px currentColor);
-    }
-
-    .friend-card:nth-child(2) .friend-icon {
-      animation-delay: 0.3s;
-    }
-
-    .friend-card:nth-child(3) .friend-icon {
-      animation-delay: 0.6s;
-    }
-
-    @keyframes iconBounce {
-      0%, 100% {
-        transform: translateY(0) scale(1);
+      header {
+        padding: 30px 0;
       }
-      50% {
-        transform: translateY(-15px) scale(1.1);
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--dark-surface);
+        padding: 20px 35px;
+        border-radius: 60px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 0 3px var(--purple);
+        transform: rotate(-0.5deg);
+        transition: all 0.3s ease;
+        border: 3px solid transparent;
       }
-    }
 
-    .friend-card h3 {
-      font-size: 24px;
-      margin-bottom: 12px;
-      color: var(--text);
-      font-weight: 700;
-    }
-
-    .friend-card p {
-      font-size: 16px;
-      line-height: 1.7;
-      color: var(--text-dim);
-      font-weight: 500;
-    }
-
-    .features-section {
-      padding: 100px 0;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 70px;
-    }
-
-    .section-badge {
-      display: inline-block;
-      padding: 12px 30px;
-      background: var(--purple);
-      border: 4px solid var(--purple-bright);
-      border-radius: 30px;
-      font-size: 16px;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 25px;
-      transform: rotate(-2deg);
-      box-shadow: 0 0 30px rgba(151, 117, 250, 0.5);
-      animation: badgeWiggle 3s ease-in-out infinite;
-    }
-
-    @keyframes badgeWiggle {
-      0%, 100% {
-        transform: rotate(-2deg);
+      nav:hover {
+        transform: rotate(0deg) translateY(-2px);
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), 0 0 20px var(--purple);
+        border-color: var(--purple);
       }
-      50% {
+
+      .logo {
+        font-size: 32px;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--coral) 0%, var(--yellow) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
         transform: rotate(2deg);
-      }
-    }
-
-    .section-title {
-      font-size: 68px;
-      font-weight: 700;
-      margin-bottom: 25px;
-      color: var(--text);
-    }
-
-    .section-description {
-      font-size: 22px;
-      color: var(--text-dim);
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.7;
-      font-weight: 500;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 40px;
-    }
-
-    .feature-box {
-      background: var(--dark-surface);
-      padding: 50px;
-      border-radius: 40px;
-      border: 4px solid transparent;
-      position: relative;
-      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
-
-    .feature-box:nth-child(1) {
-      transform: rotate(-0.5deg);
-      border-color: var(--coral);
-    }
-
-    .feature-box:nth-child(2) {
-      transform: rotate(0.5deg);
-      border-color: var(--mint);
-    }
-
-    .feature-box:nth-child(3) {
-      transform: rotate(0.3deg);
-      border-color: var(--yellow);
-    }
-
-    .feature-box:nth-child(4) {
-      transform: rotate(-0.3deg);
-      border-color: var(--purple);
-    }
-
-    .feature-box:hover {
-      transform: rotate(0deg) translateY(-10px) scale(1.02);
-    }
-
-    .feature-box:nth-child(1):hover {
-      box-shadow: 0 20px 60px rgba(255, 107, 107, 0.3);
-      border-color: var(--coral-bright);
-    }
-
-    .feature-box:nth-child(2):hover {
-      box-shadow: 0 20px 60px rgba(81, 207, 102, 0.3);
-      border-color: var(--mint-bright);
-    }
-
-    .feature-box:nth-child(3):hover {
-      box-shadow: 0 20px 60px rgba(255, 212, 59, 0.3);
-      border-color: var(--yellow-bright);
-    }
-
-    .feature-box:nth-child(4):hover {
-      box-shadow: 0 20px 60px rgba(151, 117, 250, 0.3);
-      border-color: var(--purple-bright);
-    }
-
-    .feature-emoji {
-      font-size: 72px;
-      margin-bottom: 25px;
-      display: inline-block;
-      transition: transform 0.3s ease;
-      filter: drop-shadow(0 0 20px currentColor);
-    }
-
-    .feature-box:hover .feature-emoji {
-      transform: scale(1.2) rotate(10deg);
-    }
-
-    .feature-box h3 {
-      font-size: 30px;
-      font-weight: 700;
-      margin-bottom: 18px;
-      color: var(--text);
-    }
-
-    .feature-box p {
-      font-size: 18px;
-      line-height: 1.8;
-      color: var(--text-dim);
-      font-weight: 500;
-    }
-
-    .stats-section {
-      padding: 80px 0;
-      background: var(--dark-elevated);
-      border-radius: 60px;
-      border: 4px solid var(--purple);
-      margin: 80px 0;
-      transform: rotate(-0.5deg);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 60px rgba(151, 117, 250, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 50px;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    .stat-bubble {
-      padding: 35px;
-      background: var(--dark-surface);
-      border-radius: 35px;
-      border: 4px solid var(--coral);
-      transform: rotate(1deg);
-      transition: all 0.3s ease;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
-
-    .stat-bubble:nth-child(2) {
-      border-color: var(--mint);
-    }
-
-    .stat-bubble:nth-child(3) {
-      border-color: var(--yellow);
-    }
-
-    .stat-bubble:nth-child(4) {
-      border-color: var(--purple);
-    }
-
-    .stat-bubble:nth-child(even) {
-      transform: rotate(-1deg);
-    }
-
-    .stat-bubble:hover {
-      transform: rotate(0deg) scale(1.1);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 40px currentColor;
-    }
-
-    .stat-number {
-      font-size: 56px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      background: linear-gradient(135deg, var(--coral) 0%, var(--yellow) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .stat-bubble:nth-child(2) .stat-number {
-      background: linear-gradient(135deg, var(--mint) 0%, var(--blue) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .stat-label {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text-dim);
-    }
-
-    .testimonial-section {
-      padding: 100px 0;
-    }
-
-    .testimonial-box {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 70px;
-      background: var(--dark-surface);
-      border-radius: 60px;
-      border: 4px solid var(--mint);
-      text-align: center;
-      transform: rotate(-1deg);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 60px rgba(81, 207, 102, 0.3);
-      position: relative;
-    }
-
-    .testimonial-box::before {
-      content: '"';
-      position: absolute;
-      top: 20px;
-      left: 40px;
-      font-size: 120px;
-      color: rgba(81, 207, 102, 0.1);
-      font-family: Georgia, serif;
-      line-height: 1;
-    }
-
-    .testimonial-text {
-      font-size: 30px;
-      line-height: 1.6;
-      font-weight: 500;
-      color: var(--text);
-      margin-bottom: 40px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .testimonial-author {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--mint-bright);
-      margin-bottom: 8px;
-    }
-
-    .testimonial-role {
-      font-size: 17px;
-      color: var(--text-dim);
-      font-weight: 600;
-    }
-
-    .cta-final {
-      padding: 100px 0 120px;
-      text-align: center;
-    }
-
-    .cta-box {
-      padding: 90px 60px;
-      background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
-      border-radius: 60px;
-      border: 4px solid var(--purple-bright);
-      transform: rotate(0.5deg);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 60px rgba(151, 117, 250, 0.5);
-      max-width: 800px;
-      margin: 0 auto;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta-box h2 {
-      font-size: 62px;
-      font-weight: 700;
-      margin-bottom: 25px;
-      color: white;
-      position: relative;
-      z-index: 1;
-    }
-
-    .cta-box p {
-      font-size: 26px;
-      margin-bottom: 40px;
-      color: white;
-      font-weight: 500;
-      position: relative;
-      z-index: 1;
-      opacity: 0.9;
-    }
-
-    footer {
-      padding: 70px 0 40px;
-      background: var(--dark-elevated);
-      color: white;
-      border-radius: 60px 60px 0 0;
-      border-top: 4px solid var(--purple);
-    }
-
-    .footer-content {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 50px;
-      margin-bottom: 50px;
-    }
-
-    .footer-brand h3 {
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, var(--coral) 0%, var(--yellow) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .footer-brand p {
-      line-height: 1.8;
-      color: var(--text-dim);
-      font-weight: 500;
-    }
-
-    .footer-column h4 {
-      font-size: 17px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      color: var(--mint-bright);
-    }
-
-    .footer-column ul {
-      list-style: none;
-    }
-
-    .footer-column li {
-      margin-bottom: 12px;
-    }
-
-    .footer-column a {
-      color: var(--text-dim);
-      text-decoration: none;
-      font-size: 15px;
-      transition: all 0.3s ease;
-      font-weight: 500;
-    }
-
-    .footer-column a:hover {
-      color: var(--text);
-      transform: translateX(5px);
-      display: inline-block;
-    }
-
-    .footer-bottom {
-      padding-top: 40px;
-      border-top: 2px solid rgba(255, 255, 255, 0.1);
-      text-align: center;
-      color: var(--text-dim);
-      font-weight: 500;
-    }
-
-    @media (max-width: 1024px) {
-      h1 {
-        font-size: 62px;
+        transition: transform 0.3s ease;
+        filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.5));
       }
 
-      .friends {
-        grid-template-columns: 1fr;
-      }
-
-      .features-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .footer-content {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 42px;
+      .logo:hover {
+        transform: rotate(-2deg) scale(1.05);
       }
 
       .nav-links {
-        display: none;
+        display: flex;
+        gap: 35px;
+        list-style: none;
       }
 
-      .stats-grid {
-        grid-template-columns: 1fr;
+      .nav-links a {
+        color: var(--text);
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        padding: 8px 20px;
+        border-radius: 20px;
+        border: 3px solid transparent;
+        position: relative;
       }
 
-      .footer-content {
-        grid-template-columns: 1fr;
+      .nav-links a:hover {
+        border-color: var(--mint);
+        background: var(--mint);
+        color: var(--dark-bg);
+        transform: rotate(-2deg) scale(1.1);
+        box-shadow: 0 0 20px var(--mint);
+      }
+
+      .hero {
+        padding: 100px 0 80px;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 86px;
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 30px;
+        color: var(--text);
+        position: relative;
+        display: inline-block;
+      }
+
+      .word-bubble {
+        display: inline-block;
+        padding: 15px 35px;
+        margin: 0 10px 15px;
+        border-radius: 35px;
+        border: 4px solid transparent;
+        transform: rotate(-1deg);
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        position: relative;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+      }
+
+      .word-bubble::before {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 30px;
+        width: 0;
+        height: 0;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-top: 15px solid transparent;
+      }
+
+      .word-bubble:nth-child(1) {
+        background: var(--coral);
+        color: white;
+        border-color: var(--coral-bright);
+        transform: rotate(2deg);
+        animation: bubbleBounce 3s ease-in-out infinite;
+        animation-delay: 0s;
+        box-shadow: 0 0 40px rgba(255, 107, 107, 0.5);
+      }
+
+      .word-bubble:nth-child(1)::before {
+        border-top-color: var(--coral);
+      }
+
+      .word-bubble:nth-child(2) {
+        background: var(--mint);
+        color: var(--dark-bg);
+        border-color: var(--mint-bright);
+        transform: rotate(-2deg);
+        animation: bubbleBounce 3s ease-in-out infinite;
+        animation-delay: 0.2s;
+        box-shadow: 0 0 40px rgba(81, 207, 102, 0.5);
+      }
+
+      .word-bubble:nth-child(2)::before {
+        border-top-color: var(--mint);
+      }
+
+      .word-bubble:nth-child(3) {
+        background: var(--yellow);
+        color: var(--dark-bg);
+        border-color: var(--yellow-bright);
+        transform: rotate(1deg);
+        animation: bubbleBounce 3s ease-in-out infinite;
+        animation-delay: 0.4s;
+        box-shadow: 0 0 40px rgba(255, 212, 59, 0.5);
+      }
+
+      .word-bubble:nth-child(3)::before {
+        border-top-color: var(--yellow);
+      }
+
+      .word-bubble:hover {
+        transform: rotate(0deg) scale(1.1) translateY(-5px);
+        box-shadow: 0 0 60px currentColor;
+      }
+
+      @keyframes bubbleBounce {
+        0%, 100% {
+          transform: translateY(0) rotate(2deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(-2deg);
+        }
+      }
+
+      .hero-subtitle {
+        font-size: 24px;
+        line-height: 1.7;
+        max-width: 700px;
+        margin: 0 auto 50px;
+        font-weight: 500;
+        color: var(--text-dim);
+        animation: fadeInUp 0.8s ease-out 0.3s both;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .cta-group {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 80px;
+        animation: fadeInUp 0.8s ease-out 0.5s both;
+      }
+
+      .btn {
+        padding: 18px 45px;
+        font-family: 'Fredoka', sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        border-radius: 30px;
+        text-decoration: none;
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        border: 4px solid transparent;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn span {
+        position: relative;
+        z-index: 1;
+      }
+
+      .btn-primary {
+        background: var(--coral);
+        color: white;
+        transform: rotate(-1deg);
+        box-shadow: 0 0 30px rgba(255, 107, 107, 0.5);
+        border-color: var(--coral-bright);
+      }
+
+      .btn-primary:hover {
+        background: var(--coral-bright);
+        transform: rotate(1deg) scale(1.05) translateY(-3px);
+        box-shadow: 0 0 50px rgba(255, 107, 107, 0.8);
+      }
+
+      .btn-secondary {
+        background: var(--dark-surface);
+        color: var(--text);
+        transform: rotate(1deg);
+        border-color: var(--purple);
+        box-shadow: 0 0 30px rgba(151, 117, 250, 0.3);
+      }
+
+      .btn-secondary:hover {
+        background: var(--yellow);
+        color: var(--dark-bg);
+        transform: rotate(-1deg) scale(1.05) translateY(-3px);
+        box-shadow: 0 0 50px rgba(255, 212, 59, 0.8);
+      }
+
+      .friends {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .friend-card {
+        background: var(--dark-surface);
+        padding: 40px;
+        border-radius: 35px;
+        border: 4px solid transparent;
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        transform: rotate(-1deg);
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      .friend-card:nth-child(1) {
+        border-color: var(--coral);
+      }
+
+      .friend-card:nth-child(2) {
+        border-color: var(--mint);
+      }
+
+      .friend-card:nth-child(3) {
+        border-color: var(--yellow);
+      }
+
+      .friend-card:nth-child(even) {
+        transform: rotate(1deg);
+      }
+
+      .friend-card:hover {
+        transform: rotate(0deg) translateY(-15px) scale(1.05);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+      }
+
+      .friend-card:nth-child(1):hover {
+        box-shadow: 0 20px 60px rgba(255, 107, 107, 0.4);
+        border-color: var(--coral-bright);
+      }
+
+      .friend-card:nth-child(2):hover {
+        box-shadow: 0 20px 60px rgba(81, 207, 102, 0.4);
+        border-color: var(--mint-bright);
+      }
+
+      .friend-card:nth-child(3):hover {
+        box-shadow: 0 20px 60px rgba(255, 212, 59, 0.4);
+        border-color: var(--yellow-bright);
+      }
+
+      .friend-icon {
+        font-size: 64px;
+        margin-bottom: 20px;
+        display: inline-block;
+        animation: iconBounce 2s ease-in-out infinite;
+        filter: drop-shadow(0 0 20px currentColor);
+      }
+
+      .friend-card:nth-child(2) .friend-icon {
+        animation-delay: 0.3s;
+      }
+
+      .friend-card:nth-child(3) .friend-icon {
+        animation-delay: 0.6s;
+      }
+
+      @keyframes iconBounce {
+        0%, 100% {
+          transform: translateY(0) scale(1);
+        }
+        50% {
+          transform: translateY(-15px) scale(1.1);
+        }
+      }
+
+      .friend-card h3 {
+        font-size: 24px;
+        margin-bottom: 12px;
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      .friend-card p {
+        font-size: 16px;
+        line-height: 1.7;
+        color: var(--text-dim);
+        font-weight: 500;
+      }
+
+      .features-section {
+        padding: 100px 0;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 70px;
+      }
+
+      .section-badge {
+        display: inline-block;
+        padding: 12px 30px;
+        background: var(--purple);
+        border: 4px solid var(--purple-bright);
+        border-radius: 30px;
+        font-size: 16px;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 25px;
+        transform: rotate(-2deg);
+        box-shadow: 0 0 30px rgba(151, 117, 250, 0.5);
+        animation: badgeWiggle 3s ease-in-out infinite;
+      }
+
+      @keyframes badgeWiggle {
+        0%, 100% {
+          transform: rotate(-2deg);
+        }
+        50% {
+          transform: rotate(2deg);
+        }
       }
 
       .section-title {
-        font-size: 42px;
+        font-size: 68px;
+        font-weight: 700;
+        margin-bottom: 25px;
+        color: var(--text);
       }
-    }
-  </style>
-</head>
-<body>
-  <div class="animated-bg">
-    <div class="floating-shape shape-1"></div>
-    <div class="floating-shape shape-2"></div>
-    <div class="floating-shape shape-3"></div>
-    <div class="floating-shape shape-4"></div>
-  </div>
 
-  <div class="container">
-    <header>
-      <nav>
-        <a href="/" style="text-decoration: none;"><div class="logo">SupaBOM ✨</div></a>
-        <ul class="nav-links">
-          <li><a href="#">Features</a></li>
-          <li><a href="#">Pricing</a></li>
-          <li><a href="#">Docs</a></li>
+      .section-description {
+        font-size: 22px;
+        color: var(--text-dim);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.7;
+        font-weight: 500;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+      }
+
+      .feature-box {
+        background: var(--dark-surface);
+        padding: 50px;
+        border-radius: 40px;
+        border: 4px solid transparent;
+        position: relative;
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      .feature-box:nth-child(1) {
+        transform: rotate(-0.5deg);
+        border-color: var(--coral);
+      }
+
+      .feature-box:nth-child(2) {
+        transform: rotate(0.5deg);
+        border-color: var(--mint);
+      }
+
+      .feature-box:nth-child(3) {
+        transform: rotate(0.3deg);
+        border-color: var(--yellow);
+      }
+
+      .feature-box:nth-child(4) {
+        transform: rotate(-0.3deg);
+        border-color: var(--purple);
+      }
+
+      .feature-box:hover {
+        transform: rotate(0deg) translateY(-10px) scale(1.02);
+      }
+
+      .feature-box:nth-child(1):hover {
+        box-shadow: 0 20px 60px rgba(255, 107, 107, 0.3);
+        border-color: var(--coral-bright);
+      }
+
+      .feature-box:nth-child(2):hover {
+        box-shadow: 0 20px 60px rgba(81, 207, 102, 0.3);
+        border-color: var(--mint-bright);
+      }
+
+      .feature-box:nth-child(3):hover {
+        box-shadow: 0 20px 60px rgba(255, 212, 59, 0.3);
+        border-color: var(--yellow-bright);
+      }
+
+      .feature-box:nth-child(4):hover {
+        box-shadow: 0 20px 60px rgba(151, 117, 250, 0.3);
+        border-color: var(--purple-bright);
+      }
+
+      .feature-emoji {
+        font-size: 72px;
+        margin-bottom: 25px;
+        display: inline-block;
+        transition: transform 0.3s ease;
+        filter: drop-shadow(0 0 20px currentColor);
+      }
+
+      .feature-box:hover .feature-emoji {
+        transform: scale(1.2) rotate(10deg);
+      }
+
+      .feature-box h3 {
+        font-size: 30px;
+        font-weight: 700;
+        margin-bottom: 18px;
+        color: var(--text);
+      }
+
+      .feature-box p {
+        font-size: 18px;
+        line-height: 1.8;
+        color: var(--text-dim);
+        font-weight: 500;
+      }
+
+      .stats-section {
+        padding: 80px 0;
+        background: var(--dark-elevated);
+        border-radius: 60px;
+        border: 4px solid var(--purple);
+        margin: 80px 0;
+        transform: rotate(-0.5deg);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 60px rgba(151, 117, 250, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 50px;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .stat-bubble {
+        padding: 35px;
+        background: var(--dark-surface);
+        border-radius: 35px;
+        border: 4px solid var(--coral);
+        transform: rotate(1deg);
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      .stat-bubble:nth-child(2) {
+        border-color: var(--mint);
+      }
+
+      .stat-bubble:nth-child(3) {
+        border-color: var(--yellow);
+      }
+
+      .stat-bubble:nth-child(4) {
+        border-color: var(--purple);
+      }
+
+      .stat-bubble:nth-child(even) {
+        transform: rotate(-1deg);
+      }
+
+      .stat-bubble:hover {
+        transform: rotate(0deg) scale(1.1);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 40px currentColor;
+      }
+
+      .stat-number {
+        font-size: 56px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        background: linear-gradient(135deg, var(--coral) 0%, var(--yellow) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .stat-bubble:nth-child(2) .stat-number {
+        background: linear-gradient(135deg, var(--mint) 0%, var(--blue) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .stat-label {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text-dim);
+      }
+
+      .testimonial-section {
+        padding: 100px 0;
+      }
+
+      .testimonial-box {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 70px;
+        background: var(--dark-surface);
+        border-radius: 60px;
+        border: 4px solid var(--mint);
+        text-align: center;
+        transform: rotate(-1deg);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 60px rgba(81, 207, 102, 0.3);
+        position: relative;
+      }
+
+      .testimonial-box::before {
+        content: '"';
+        position: absolute;
+        top: 20px;
+        left: 40px;
+        font-size: 120px;
+        color: rgba(81, 207, 102, 0.1);
+        font-family: Georgia, serif;
+        line-height: 1;
+      }
+
+      .testimonial-text {
+        font-size: 30px;
+        line-height: 1.6;
+        font-weight: 500;
+        color: var(--text);
+        margin-bottom: 40px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .testimonial-author {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--mint-bright);
+        margin-bottom: 8px;
+      }
+
+      .testimonial-role {
+        font-size: 17px;
+        color: var(--text-dim);
+        font-weight: 600;
+      }
+
+      .cta-final {
+        padding: 100px 0 120px;
+        text-align: center;
+      }
+
+      .cta-box {
+        padding: 90px 60px;
+        background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+        border-radius: 60px;
+        border: 4px solid var(--purple-bright);
+        transform: rotate(0.5deg);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 60px rgba(151, 117, 250, 0.5);
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cta-box h2 {
+        font-size: 62px;
+        font-weight: 700;
+        margin-bottom: 25px;
+        color: white;
+        position: relative;
+        z-index: 1;
+      }
+
+      .cta-box p {
+        font-size: 26px;
+        margin-bottom: 40px;
+        color: white;
+        font-weight: 500;
+        position: relative;
+        z-index: 1;
+        opacity: 0.9;
+      }
+
+      footer {
+        padding: 70px 0 40px;
+        background: var(--dark-elevated);
+        color: white;
+        border-radius: 60px 60px 0 0;
+        border-top: 4px solid var(--purple);
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 50px;
+        margin-bottom: 50px;
+      }
+
+      .footer-brand h3 {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, var(--coral) 0%, var(--yellow) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .footer-brand p {
+        line-height: 1.8;
+        color: var(--text-dim);
+        font-weight: 500;
+      }
+
+      .footer-column h4 {
+        font-size: 17px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: var(--mint-bright);
+      }
+
+      .footer-column ul {
+        list-style: none;
+      }
+
+      .footer-column li {
+        margin-bottom: 12px;
+      }
+
+      .footer-column a {
+        color: var(--text-dim);
+        text-decoration: none;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .footer-column a:hover {
+        color: var(--text);
+        transform: translateX(5px);
+        display: inline-block;
+      }
+
+      .footer-bottom {
+        padding-top: 40px;
+        border-top: 2px solid rgba(255, 255, 255, 0.1);
+        text-align: center;
+        color: var(--text-dim);
+        font-weight: 500;
+      }
+
+      @media (max-width: 1024px) {
+        h1 {
+          font-size: 62px;
+        }
+
+        .friends {
+          grid-template-columns: 1fr;
+        }
+
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .footer-content {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 42px;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-content {
+          grid-template-columns: 1fr;
+        }
+
+        .section-title {
+          font-size: 42px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="animated-bg">
+      <div class="floating-shape shape-1"></div>
+      <div class="floating-shape shape-2"></div>
+      <div class="floating-shape shape-3"></div>
+      <div class="floating-shape shape-4"></div>
+    </div>
+
+    <div class="container">
+      <header>
+        <nav>
+          <a href="/" style="text-decoration: none;">
+            <div class="logo">SupaBOM ✨</div>
+          </a>
+          <ul class="nav-links">
+            <li><a href="#">Features</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Docs</a></li>
+            <%= if assigns[:current_user] do %>
+              <li>
+                <a
+                  href="/dashboard"
+                  style="background: var(--mint); color: var(--dark-bg); border-color: var(--mint);"
+                >
+                  Go to Dashboard
+                </a>
+              </li>
+            <% else %>
+              <li><a href="/sign-in">Login</a></li>
+            <% end %>
+          </ul>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <h1>
+          <span class="word-bubble">Friendly</span> <br />
+          <span class="word-bubble">Security</span> <br />
+          <span class="word-bubble">Platform</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Security doesn't have to be scary! We make SBOM generation and vulnerability scanning
+          fun, easy, and delightful. No confusing jargon, just simple protection. 🎉
+        </p>
+
+        <div class="cta-group">
           <%= if assigns[:current_user] do %>
-            <li><a href="/dashboard" style="background: var(--mint); color: var(--dark-bg); border-color: var(--mint);">Go to Dashboard</a></li>
+            <a href="/dashboard" class="btn btn-primary"><span>Go to Dashboard 🚀</span></a>
+            <a href="#" class="btn btn-secondary"><span>Watch Video 🎬</span></a>
           <% else %>
-            <li><a href="/sign-in">Login</a></li>
+            <a href="/sign-in" class="btn btn-primary"><span>Start For Free 🚀</span></a>
+            <a href="#" class="btn btn-secondary"><span>Watch Video 🎬</span></a>
           <% end %>
-        </ul>
-      </nav>
-    </header>
-
-    <section class="hero">
-      <h1>
-        <span class="word-bubble">Friendly</span><br/>
-        <span class="word-bubble">Security</span><br/>
-        <span class="word-bubble">Platform</span>
-      </h1>
-
-      <p class="hero-subtitle">
-        Security doesn't have to be scary! We make SBOM generation and vulnerability scanning
-        fun, easy, and delightful. No confusing jargon, just simple protection. 🎉
-      </p>
-
-      <div class="cta-group">
-        <%= if assigns[:current_user] do %>
-          <a href="/dashboard" class="btn btn-primary"><span>Go to Dashboard 🚀</span></a>
-          <a href="#" class="btn btn-secondary"><span>Watch Video 🎬</span></a>
-        <% else %>
-          <a href="/sign-in" class="btn btn-primary"><span>Start For Free 🚀</span></a>
-          <a href="#" class="btn btn-secondary"><span>Watch Video 🎬</span></a>
-        <% end %>
-      </div>
-
-      <div class="friends">
-        <div class="friend-card">
-          <div class="friend-icon">⚡</div>
-          <h3>Super Fast</h3>
-          <p>Scan your code in seconds, not hours!</p>
         </div>
-        <div class="friend-card">
-          <div class="friend-icon">🎯</div>
-          <h3>Easy Setup</h3>
-          <p>Connect and go! No complicated configuration.</p>
-        </div>
-        <div class="friend-card">
-          <div class="friend-icon">💙</div>
-          <h3>Always Helpful</h3>
-          <p>Friendly alerts and clear fix suggestions.</p>
-        </div>
-      </div>
-    </section>
 
-    <section class="features-section">
-      <div class="section-header">
-        <span class="section-badge">What We Do ✨</span>
-        <h2 class="section-title">Amazing Features</h2>
-        <p class="section-description">
-          Everything you need to keep your code safe and sound
-        </p>
-      </div>
+        <div class="friends">
+          <div class="friend-card">
+            <div class="friend-icon">⚡</div>
+            <h3>Super Fast</h3>
+            <p>Scan your code in seconds, not hours!</p>
+          </div>
+          <div class="friend-card">
+            <div class="friend-icon">🎯</div>
+            <h3>Easy Setup</h3>
+            <p>Connect and go! No complicated configuration.</p>
+          </div>
+          <div class="friend-card">
+            <div class="friend-icon">💙</div>
+            <h3>Always Helpful</h3>
+            <p>Friendly alerts and clear fix suggestions.</p>
+          </div>
+        </div>
+      </section>
 
-      <div class="features-grid">
-        <div class="feature-box">
-          <div class="feature-emoji">🌍</div>
-          <h3>Works Everywhere</h3>
-          <p>
-            JavaScript, Elixir, .NET - we speak all the languages! Upload your package.json,
-            mix.exs, or .csproj and we'll take care of the rest. Easy peasy!
+      <section class="features-section">
+        <div class="section-header">
+          <span class="section-badge">What We Do ✨</span>
+          <h2 class="section-title">Amazing Features</h2>
+          <p class="section-description">
+            Everything you need to keep your code safe and sound
           </p>
         </div>
 
-        <div class="feature-box">
-          <div class="feature-emoji">🔍</div>
-          <h3>Finds Problems Fast</h3>
-          <p>
-            We're like a super detective for your code! Instantly spot vulnerabilities and
-            get friendly tips on how to fix them. No stress, just results!
-          </p>
-        </div>
-
-        <div class="feature-box">
-          <div class="feature-emoji">🤖</div>
-          <h3>Auto-Magic Integration</h3>
-          <p>
-            Plug into your CI/CD and forget about it! We'll automatically scan every update
-            and keep bad stuff out. Like a friendly robot guard!
-          </p>
-        </div>
-
-        <div class="feature-box">
-          <div class="feature-emoji">👥</div>
-          <h3>Team Friendly</h3>
-          <p>
-            Manage all your projects and teams from one happy place. Share reports, set
-            permissions, and collaborate with ease. Teamwork makes the dream work!
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="stats-section">
-      <div class="container">
-        <div class="stats-grid">
-          <div class="stat-bubble">
-            <div class="stat-number">2.4M+</div>
-            <div class="stat-label">Happy Scans</div>
-          </div>
-          <div class="stat-bubble">
-            <div class="stat-number">18K+</div>
-            <div class="stat-label">Teams</div>
-          </div>
-          <div class="stat-bubble">
-            <div class="stat-number">99.97%</div>
-            <div class="stat-label">Uptime</div>
-          </div>
-          <div class="stat-bubble">
-            <div class="stat-number">847K+</div>
-            <div class="stat-label">Threats Found</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="testimonial-section">
-      <div class="testimonial-box">
-        <p class="testimonial-text">
-          SupaBOM made security actually fun! My team loves how easy it is to use,
-          and we finally understand what's happening with our dependencies. Game changer!
-        </p>
-        <div class="testimonial-author">Marcus Johnson 🎉</div>
-        <div class="testimonial-role">Lead Developer, StartupCo</div>
-      </div>
-    </section>
-
-    <section class="cta-final">
-      <div class="cta-box">
-        <h2>Let's Be Friends! 👋</h2>
-        <p>Join thousands of happy developers keeping their code safe</p>
-        <%= if assigns[:current_user] do %>
-          <a href="/dashboard" class="btn btn-primary"><span>Go to Dashboard 🎊</span></a>
-        <% else %>
-          <a href="/sign-in" class="btn btn-primary"><span>Start Free Trial 🎊</span></a>
-        <% end %>
-      </div>
-    </section>
-
-    <footer>
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-brand">
-            <h3>SupaBOM</h3>
+        <div class="features-grid">
+          <div class="feature-box">
+            <div class="feature-emoji">🌍</div>
+            <h3>Works Everywhere</h3>
             <p>
-              Making security friendly and fun for everyone. Because protecting your code
-              shouldn't be complicated or scary!
+              JavaScript, Elixir, .NET - we speak all the languages! Upload your package.json,
+              mix.exs, or .csproj and we'll take care of the rest. Easy peasy!
             </p>
           </div>
 
-          <div class="footer-column">
-            <h4>Product</h4>
-            <ul>
-              <li><a href="#">Features</a></li>
-              <li><a href="#">Pricing</a></li>
-              <li><a href="#">Security</a></li>
-              <li><a href="#">API</a></li>
-            </ul>
+          <div class="feature-box">
+            <div class="feature-emoji">🔍</div>
+            <h3>Finds Problems Fast</h3>
+            <p>
+              We're like a super detective for your code! Instantly spot vulnerabilities and
+              get friendly tips on how to fix them. No stress, just results!
+            </p>
           </div>
 
-          <div class="footer-column">
-            <h4>Resources</h4>
-            <ul>
-              <li><a href="#">Help Center</a></li>
-              <li><a href="#">Guides</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">Support</a></li>
-            </ul>
+          <div class="feature-box">
+            <div class="feature-emoji">🤖</div>
+            <h3>Auto-Magic Integration</h3>
+            <p>
+              Plug into your CI/CD and forget about it! We'll automatically scan every update
+              and keep bad stuff out. Like a friendly robot guard!
+            </p>
           </div>
 
-          <div class="footer-column">
-            <h4>Company</h4>
-            <ul>
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Contact</a></li>
-              <li><a href="#">Privacy</a></li>
-            </ul>
+          <div class="feature-box">
+            <div class="feature-emoji">👥</div>
+            <h3>Team Friendly</h3>
+            <p>
+              Manage all your projects and teams from one happy place. Share reports, set
+              permissions, and collaborate with ease. Teamwork makes the dream work!
+            </p>
           </div>
         </div>
+      </section>
 
-        <div class="footer-bottom">
-          <p>© 2026 SupaBOM. Made with ❤️ for developers everywhere. Let's keep code safe together!</p>
+      <section class="stats-section">
+        <div class="container">
+          <div class="stats-grid">
+            <div class="stat-bubble">
+              <div class="stat-number">2.4M+</div>
+              <div class="stat-label">Happy Scans</div>
+            </div>
+            <div class="stat-bubble">
+              <div class="stat-number">18K+</div>
+              <div class="stat-label">Teams</div>
+            </div>
+            <div class="stat-bubble">
+              <div class="stat-number">99.97%</div>
+              <div class="stat-label">Uptime</div>
+            </div>
+            <div class="stat-bubble">
+              <div class="stat-number">847K+</div>
+              <div class="stat-label">Threats Found</div>
+            </div>
+          </div>
         </div>
-      </div>
-    </footer>
-  </div>
-</body>
+      </section>
+
+      <section class="testimonial-section">
+        <div class="testimonial-box">
+          <p class="testimonial-text">
+            SupaBOM made security actually fun! My team loves how easy it is to use,
+            and we finally understand what's happening with our dependencies. Game changer!
+          </p>
+          <div class="testimonial-author">Marcus Johnson 🎉</div>
+          <div class="testimonial-role">Lead Developer, StartupCo</div>
+        </div>
+      </section>
+
+      <section class="cta-final">
+        <div class="cta-box">
+          <h2>Let's Be Friends! 👋</h2>
+          <p>Join thousands of happy developers keeping their code safe</p>
+          <%= if assigns[:current_user] do %>
+            <a href="/dashboard" class="btn btn-primary"><span>Go to Dashboard 🎊</span></a>
+          <% else %>
+            <a href="/sign-in" class="btn btn-primary"><span>Start Free Trial 🎊</span></a>
+          <% end %>
+        </div>
+      </section>
+
+      <footer>
+        <div class="container">
+          <div class="footer-content">
+            <div class="footer-brand">
+              <h3>SupaBOM</h3>
+              <p>
+                Making security friendly and fun for everyone. Because protecting your code
+                shouldn't be complicated or scary!
+              </p>
+            </div>
+
+            <div class="footer-column">
+              <h4>Product</h4>
+              <ul>
+                <li><a href="#">Features</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Security</a></li>
+                <li><a href="#">API</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h4>Resources</h4>
+              <ul>
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">Guides</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Support</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h4>Company</h4>
+              <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Privacy</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer-bottom">
+            <p>
+              © 2026 SupaBOM. Made with ❤️ for developers everywhere. Let's keep code safe together!
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
 </html>

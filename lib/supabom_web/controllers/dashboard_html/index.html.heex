@@ -1,340 +1,343 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - SupaBOM</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --coral: #ff6b6b;
-      --coral-bright: #ff8787;
-      --mint: #51cf66;
-      --mint-bright: #69db7c;
-      --yellow: #ffd43b;
-      --yellow-bright: #ffe066;
-      --purple: #9775fa;
-      --purple-bright: #b197fc;
-      --dark-bg: #1a1625;
-      --dark-surface: #251e35;
-      --dark-elevated: #2f2640;
-      --text: #f8f9fa;
-      --text-dim: #adb5bd;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Fredoka', sans-serif;
-      background: var(--dark-bg);
-      color: var(--text);
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
-
-    .animated-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .floating-shape {
-      position: absolute;
-      opacity: 0.08;
-      filter: blur(60px);
-      animation: gentleFloat 25s ease-in-out infinite;
-    }
-
-    .shape-1 {
-      width: 300px;
-      height: 300px;
-      background: var(--coral);
-      border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
-      top: 10%;
-      left: 5%;
-      animation-delay: 0s;
-    }
-
-    .shape-2 {
-      width: 250px;
-      height: 250px;
-      background: var(--mint);
-      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-      top: 60%;
-      right: 10%;
-      animation-delay: 5s;
-    }
-
-    .shape-3 {
-      width: 280px;
-      height: 280px;
-      background: var(--purple);
-      border-radius: 41% 59% 42% 58% / 41% 44% 56% 59%;
-      bottom: 15%;
-      left: 15%;
-      animation-delay: 10s;
-    }
-
-    @keyframes gentleFloat {
-      0%, 100% {
-        transform: translate(0, 0) rotate(0deg) scale(1);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - SupaBOM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --coral: #ff6b6b;
+        --coral-bright: #ff8787;
+        --mint: #51cf66;
+        --mint-bright: #69db7c;
+        --yellow: #ffd43b;
+        --yellow-bright: #ffe066;
+        --purple: #9775fa;
+        --purple-bright: #b197fc;
+        --dark-bg: #1a1625;
+        --dark-surface: #251e35;
+        --dark-elevated: #2f2640;
+        --text: #f8f9fa;
+        --text-dim: #adb5bd;
       }
-      33% {
-        transform: translate(30px, -30px) rotate(120deg) scale(1.1);
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
-      66% {
-        transform: translate(-20px, 20px) rotate(240deg) scale(0.9);
+
+      body {
+        font-family: 'Fredoka', sans-serif;
+        background: var(--dark-bg);
+        color: var(--text);
+        overflow-x: hidden;
+        min-height: 100vh;
       }
-    }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 30px;
-      position: relative;
-      z-index: 1;
-    }
+      .animated-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
 
-    header {
-      padding: 30px 0;
-    }
+      .floating-shape {
+        position: absolute;
+        opacity: 0.08;
+        filter: blur(60px);
+        animation: gentleFloat 25s ease-in-out infinite;
+      }
 
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--dark-surface);
-      padding: 20px 35px;
-      border-radius: 60px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 0 3px var(--purple);
-      transform: rotate(-0.5deg);
-      transition: all 0.3s ease;
-    }
+      .shape-1 {
+        width: 300px;
+        height: 300px;
+        background: var(--coral);
+        border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+        top: 10%;
+        left: 5%;
+        animation-delay: 0s;
+      }
 
-    nav:hover {
-      transform: rotate(0deg) translateY(-2px);
-      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), 0 0 20px var(--purple);
-    }
+      .shape-2 {
+        width: 250px;
+        height: 250px;
+        background: var(--mint);
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        top: 60%;
+        right: 10%;
+        animation-delay: 5s;
+      }
 
-    .logo-link {
-      text-decoration: none;
-    }
+      .shape-3 {
+        width: 280px;
+        height: 280px;
+        background: var(--purple);
+        border-radius: 41% 59% 42% 58% / 41% 44% 56% 59%;
+        bottom: 15%;
+        left: 15%;
+        animation-delay: 10s;
+      }
 
-    .logo {
-      font-size: 32px;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--coral) 0%, var(--yellow) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      transform: rotate(2deg);
-      transition: transform 0.3s ease;
-      filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.5));
-    }
+      @keyframes gentleFloat {
+        0%, 100% {
+          transform: translate(0, 0) rotate(0deg) scale(1);
+        }
+        33% {
+          transform: translate(30px, -30px) rotate(120deg) scale(1.1);
+        }
+        66% {
+          transform: translate(-20px, 20px) rotate(240deg) scale(0.9);
+        }
+      }
 
-    .logo:hover {
-      transform: rotate(-2deg) scale(1.05);
-    }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 30px;
+        position: relative;
+        z-index: 1;
+      }
 
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
+      header {
+        padding: 30px 0;
+      }
 
-    .user-info {
-      color: var(--text-dim);
-      font-size: 14px;
-      font-weight: 500;
-    }
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--dark-surface);
+        padding: 20px 35px;
+        border-radius: 60px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 0 3px var(--purple);
+        transform: rotate(-0.5deg);
+        transition: all 0.3s ease;
+      }
 
-    .nav-links {
-      display: flex;
-      gap: 15px;
-      list-style: none;
-    }
+      nav:hover {
+        transform: rotate(0deg) translateY(-2px);
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), 0 0 20px var(--purple);
+      }
 
-    .nav-links a {
-      color: var(--text);
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      padding: 8px 18px;
-      border-radius: 20px;
-      border: 2px solid transparent;
-    }
+      .logo-link {
+        text-decoration: none;
+      }
 
-    .nav-links a:hover {
-      border-color: var(--coral);
-      background: var(--coral);
-      color: white;
-      transform: scale(1.05);
-    }
+      .logo {
+        font-size: 32px;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--coral) 0%, var(--yellow) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        transform: rotate(2deg);
+        transition: transform 0.3s ease;
+        filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.5));
+      }
 
-    .main-content {
-      padding: 40px 0;
-    }
+      .logo:hover {
+        transform: rotate(-2deg) scale(1.05);
+      }
 
-    h1 {
-      font-size: 48px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      color: var(--text);
-    }
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
 
-    .subtitle {
-      font-size: 18px;
-      color: var(--text-dim);
-      margin-bottom: 40px;
-      font-weight: 500;
-    }
+      .user-info {
+        color: var(--text-dim);
+        font-size: 14px;
+        font-weight: 500;
+      }
 
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 30px;
-      margin-top: 30px;
-    }
+      .nav-links {
+        display: flex;
+        gap: 15px;
+        list-style: none;
+      }
 
-    .project-card {
-      background: var(--dark-surface);
-      padding: 35px;
-      border-radius: 35px;
-      border: 4px solid var(--purple);
-      transform: rotate(-0.5deg);
-      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
+      .nav-links a {
+        color: var(--text);
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        padding: 8px 18px;
+        border-radius: 20px;
+        border: 2px solid transparent;
+      }
 
-    .project-card:hover {
-      transform: rotate(0deg) translateY(-10px);
-      box-shadow: 0 20px 60px rgba(151, 117, 250, 0.3);
-      border-color: var(--purple-bright);
-    }
+      .nav-links a:hover {
+        border-color: var(--coral);
+        background: var(--coral);
+        color: white;
+        transform: scale(1.05);
+      }
 
-    .project-card h3 {
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 15px;
-      color: var(--text);
-    }
+      .main-content {
+        padding: 40px 0;
+      }
 
-    .project-card p {
-      font-size: 16px;
-      color: var(--text-dim);
-      line-height: 1.6;
-      font-weight: 500;
-    }
+      h1 {
+        font-size: 48px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: var(--text);
+      }
 
-    .empty-state {
-      text-align: center;
-      padding: 80px 40px;
-      background: var(--dark-surface);
-      border-radius: 40px;
-      border: 4px solid var(--mint);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
-    }
+      .subtitle {
+        font-size: 18px;
+        color: var(--text-dim);
+        margin-bottom: 40px;
+        font-weight: 500;
+      }
 
-    .empty-state-icon {
-      font-size: 80px;
-      margin-bottom: 25px;
-    }
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+      }
 
-    .empty-state h2 {
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 15px;
-      color: var(--text);
-    }
+      .project-card {
+        background: var(--dark-surface);
+        padding: 35px;
+        border-radius: 35px;
+        border: 4px solid var(--purple);
+        transform: rotate(-0.5deg);
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
 
-    .empty-state p {
-      font-size: 18px;
-      color: var(--text-dim);
-      margin-bottom: 30px;
-      font-weight: 500;
-    }
+      .project-card:hover {
+        transform: rotate(0deg) translateY(-10px);
+        box-shadow: 0 20px 60px rgba(151, 117, 250, 0.3);
+        border-color: var(--purple-bright);
+      }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 18px 40px;
-      font-family: 'Fredoka', sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      border-radius: 30px;
-      text-decoration: none;
-      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      border: 4px solid transparent;
-      cursor: pointer;
-      background: var(--mint);
-      color: var(--dark-bg);
-      box-shadow: 0 0 30px rgba(81, 207, 102, 0.5);
-      border-color: var(--mint-bright);
-      transform: rotate(-1deg);
-    }
+      .project-card h3 {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: var(--text);
+      }
 
-    .btn:hover {
-      background: var(--mint-bright);
-      transform: rotate(1deg) scale(1.05) translateY(-3px);
-      box-shadow: 0 0 50px rgba(81, 207, 102, 0.8);
-    }
-  </style>
-</head>
-<body>
-  <div class="animated-bg">
-    <div class="floating-shape shape-1"></div>
-    <div class="floating-shape shape-2"></div>
-    <div class="floating-shape shape-3"></div>
-  </div>
+      .project-card p {
+        font-size: 16px;
+        color: var(--text-dim);
+        line-height: 1.6;
+        font-weight: 500;
+      }
 
-  <div class="container">
-    <header>
-      <nav>
-        <a href="/" class="logo-link">
-          <div class="logo">SupaBOM ✨</div>
-        </a>
-        <div class="nav-right">
-          <span class="user-info">
-            <%= if @current_user do %>
-              <%= @current_user.email %>
-            <% end %>
-          </span>
-          <ul class="nav-links">
-            <li><a href="/sign-out">Sign Out</a></li>
-          </ul>
+      .empty-state {
+        text-align: center;
+        padding: 80px 40px;
+        background: var(--dark-surface);
+        border-radius: 40px;
+        border: 4px solid var(--mint);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+      }
+
+      .empty-state-icon {
+        font-size: 80px;
+        margin-bottom: 25px;
+      }
+
+      .empty-state h2 {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: var(--text);
+      }
+
+      .empty-state p {
+        font-size: 18px;
+        color: var(--text-dim);
+        margin-bottom: 30px;
+        font-weight: 500;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px 40px;
+        font-family: 'Fredoka', sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        border-radius: 30px;
+        text-decoration: none;
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        border: 4px solid transparent;
+        cursor: pointer;
+        background: var(--mint);
+        color: var(--dark-bg);
+        box-shadow: 0 0 30px rgba(81, 207, 102, 0.5);
+        border-color: var(--mint-bright);
+        transform: rotate(-1deg);
+      }
+
+      .btn:hover {
+        background: var(--mint-bright);
+        transform: rotate(1deg) scale(1.05) translateY(-3px);
+        box-shadow: 0 0 50px rgba(81, 207, 102, 0.8);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="animated-bg">
+      <div class="floating-shape shape-1"></div>
+      <div class="floating-shape shape-2"></div>
+      <div class="floating-shape shape-3"></div>
+    </div>
+
+    <div class="container">
+      <header>
+        <nav>
+          <a href="/" class="logo-link">
+            <div class="logo">SupaBOM ✨</div>
+          </a>
+          <div class="nav-right">
+            <span class="user-info">
+              <%= if @current_user do %>
+                {@current_user.email}
+              <% end %>
+            </span>
+            <ul class="nav-links">
+              <li><a href="/sign-out">Sign Out</a></li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+
+      <main class="main-content">
+        <h1>Your Projects 🚀</h1>
+        <p class="subtitle">Manage your SBOM scans and security reports</p>
+
+        <div class="empty-state">
+          <div class="empty-state-icon">📦</div>
+          <h2>No Projects Yet</h2>
+          <p>Get started by creating your first project and scanning your dependencies!</p>
+          <a href="#" class="btn">Create Your First Project ✨</a>
         </div>
-      </nav>
-    </header>
-
-    <main class="main-content">
-      <h1>Your Projects 🚀</h1>
-      <p class="subtitle">Manage your SBOM scans and security reports</p>
-
-      <div class="empty-state">
-        <div class="empty-state-icon">📦</div>
-        <h2>No Projects Yet</h2>
-        <p>Get started by creating your first project and scanning your dependencies!</p>
-        <a href="#" class="btn">Create Your First Project ✨</a>
-      </div>
-
-      <!-- Future: projects grid will go here -->
-      <div class="projects-grid" style="display: none;">
-        <!-- Projects will be listed here -->
-      </div>
-    </main>
-  </div>
-</body>
+        
+<!-- Future: projects grid will go here -->
+        <div class="projects-grid" style="display: none;">
+          <!-- Projects will be listed here -->
+        </div>
+      </main>
+    </div>
+  </body>
 </html>

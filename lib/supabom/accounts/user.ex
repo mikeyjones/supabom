@@ -7,29 +7,30 @@ defmodule Supabom.Accounts.User do
     domain: Supabom.Accounts,
     data_layer: AshPostgres.DataLayer,
     extensions: [AshAuthentication],
-    authorizers: [Ash.Policy.Authorizer]
+    authorizers: [Ash.Policy.Authorizer],
+    primary_read_warning?: false
 
   postgres do
-    table "users"
-    repo Supabom.Repo
+    table("users")
+    repo(Supabom.Repo)
   end
 
   authentication do
     tokens do
-      enabled? true
-      token_resource Supabom.Accounts.Token
-      signing_secret Supabom.Accounts.Secrets
+      enabled?(true)
+      token_resource(Supabom.Accounts.Token)
+      signing_secret(Supabom.Accounts.Secrets)
     end
 
-    session_identifier :jti
+    session_identifier(:jti)
 
     strategies do
       magic_link do
-        identity_field :email
-        require_interaction? false
-        registration_enabled? true
+        identity_field(:email)
+        require_interaction?(false)
+        registration_enabled?(true)
 
-        sender fn user_or_email, token, _opts ->
+        sender(fn user_or_email, token, _opts ->
           # Handle both existing users (map) and new registrations (email string)
           email =
             if is_binary(user_or_email),
@@ -74,53 +75,53 @@ defmodule Supabom.Accounts.User do
           |> Supabom.Mailer.deliver()
 
           :ok
-        end
+        end)
       end
     end
   end
 
   attributes do
-    uuid_primary_key :id
+    uuid_primary_key(:id)
 
     attribute :email, :ci_string do
-      allow_nil? false
-      public? true
+      allow_nil?(false)
+      public?(true)
     end
 
-    create_timestamp :inserted_at
-    update_timestamp :updated_at
+    create_timestamp(:inserted_at)
+    update_timestamp(:updated_at)
   end
 
   identities do
-    identity :unique_email, [:email]
+    identity(:unique_email, [:email])
   end
 
   actions do
-    defaults [:destroy]
+    defaults([:destroy])
 
     read :read do
-      primary? true
-      prepare build(load: [:email])
+      primary?(true)
+      prepare(build(load: [:email]))
     end
 
     create :create do
-      accept [:email]
-      primary? true
+      accept([:email])
+      primary?(true)
     end
 
     update :update do
-      accept [:email]
-      primary? true
+      accept([:email])
+      primary?(true)
     end
   end
 
   policies do
     bypass AshAuthentication.Checks.AshAuthenticationInteraction do
-      authorize_if always()
+      authorize_if(always())
     end
 
     policy always() do
-      forbid_if always()
+      forbid_if(always())
     end
   end
 end

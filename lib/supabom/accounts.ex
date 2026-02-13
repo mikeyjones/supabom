@@ -6,7 +6,7 @@ defmodule Supabom.Accounts do
   use Ash.Domain
 
   resources do
-    resource Supabom.Accounts.User
-    resource Supabom.Accounts.Token
+    resource(Supabom.Accounts.User)
+    resource(Supabom.Accounts.Token)
   end
 end

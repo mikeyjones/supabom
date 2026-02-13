@@ -10,17 +10,17 @@ defmodule Supabom.Accounts.Token do
     authorizers: [Ash.Policy.Authorizer]
 
   postgres do
-    table "tokens"
-    repo Supabom.Repo
+    table("tokens")
+    repo(Supabom.Repo)
   end
 
   policies do
     bypass AshAuthentication.Checks.AshAuthenticationInteraction do
-      authorize_if always()
+      authorize_if(always())
     end
 
     policy always() do
-      forbid_if always()
+      forbid_if(always())
     end
   end
 end
