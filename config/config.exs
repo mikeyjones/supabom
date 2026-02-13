@@ -9,7 +9,8 @@ import Config
 
 config :supabom,
   ecto_repos: [Supabom.Repo],
-  generators: [timestamp_type: :utc_datetime]
+  generators: [timestamp_type: :utc_datetime],
+  ash_domains: [Supabom.Accounts]
 
 # Configure the endpoint
 config :supabom, SupabomWeb.Endpoint,
@@ -38,6 +39,8 @@ config :logger, :default_formatter,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+config :ash_authentication, return_error_on_invalid_magic_link_token?: true
+config :ash_authentication, :bypass_require_interaction_for_magic_link?, true
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

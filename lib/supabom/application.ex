@@ -12,6 +12,7 @@ defmodule Supabom.Application do
       Supabom.Repo,
       {DNSCluster, query: Application.get_env(:supabom, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Supabom.PubSub},
+      {AshAuthentication.Supervisor, otp_app: :supabom},
       # Start a worker by calling: Supabom.Worker.start_link(arg)
       # {Supabom.Worker, arg},
       # Start to serve requests, typically the last entry

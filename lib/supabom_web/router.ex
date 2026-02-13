@@ -1,6 +1,9 @@
 defmodule SupabomWeb.Router do
   use SupabomWeb, :router
 
+  import AshAuthentication.Phoenix.Router
+  import SupabomWeb.Plugs.AuthPlugs
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -8,6 +11,11 @@ defmodule SupabomWeb.Router do
     plug :put_root_layout, html: {SupabomWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :load_current_user
+  end
+
+  pipeline :require_authenticated_user do
+    plug :require_authenticated
   end
 
   pipeline :api do
@@ -18,6 +26,25 @@ defmodule SupabomWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    # Custom sign-in page with playful design
+    get "/sign-in", AuthController, :request
+    get "/check-email", AuthController, :check_email
+    sign_out_route AuthController
+
+    auth_routes AuthController, Supabom.Accounts.User,
+      path: "/auth",
+      on_success: [
+        {AshAuthentication.Strategy.MagicLink, :request, {SupabomWeb.AuthController, :redirect_to_sign_in}}
+      ],
+      overrides: [SupabomWeb.AuthOverrides, AshAuthentication.Phoenix.Overrides.Default]
+  end
+
+  # Protected routes - require authentication
+  scope "/", SupabomWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    get "/dashboard", DashboardController, :index
   end
 
   # Other scopes may use custom stacks.

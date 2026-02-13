@@ -43,6 +43,7 @@ defmodule SupabomWeb do
       use Gettext, backend: SupabomWeb.Gettext
 
       import Plug.Conn
+      import AshAuthentication.Phoenix.Controller
 
       unquote(verified_routes())
     end
@@ -84,6 +85,7 @@ defmodule SupabomWeb do
 
       # HTML escaping functionality
       import Phoenix.HTML
+      import Phoenix.HTML.Form
       # Core UI components
       import SupabomWeb.CoreComponents
 

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mix deps.get:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(mix ecto.gen.migration:*)",
+      "Bash(mix ecto.migrate:*)",
+      "Bash(mix compile:*)",
+      "Bash(mix phx.server:*)",
+      "Bash(mix phx.routes:*)"
+    ]
+  }
+}

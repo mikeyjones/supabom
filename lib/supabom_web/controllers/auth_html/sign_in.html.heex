@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirm Sign In - SupaBOM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --coral: #ff6b6b;
+      --coral-bright: #ff8787;
+      --mint: #51cf66;
+      --mint-bright: #69db7c;
+      --yellow: #ffd43b;
+      --yellow-bright: #ffe066;
+      --purple: #9775fa;
+      --purple-bright: #b197fc;
+      --dark-bg: #1a1625;
+      --dark-surface: #251e35;
+      --dark-elevated: #2f2640;
+      --text: #f8f9fa;
+      --text-dim: #adb5bd;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Fredoka', sans-serif;
+      background: var(--dark-bg);
+      color: var(--text);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .floating-shape {
+      position: absolute;
+      opacity: 0.08;
+      filter: blur(60px);
+      animation: gentleFloat 25s ease-in-out infinite;
+    }
+
+    .shape-1 {
+      width: 300px;
+      height: 300px;
+      background: var(--coral);
+      border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+      top: 10%;
+      left: 5%;
+      animation-delay: 0s;
+    }
+
+    .shape-2 {
+      width: 250px;
+      height: 250px;
+      background: var(--mint);
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      top: 60%;
+      right: 10%;
+      animation-delay: 5s;
+    }
+
+    .shape-3 {
+      width: 280px;
+      height: 280px;
+      background: var(--purple);
+      border-radius: 41% 59% 42% 58% / 41% 44% 56% 59%;
+      bottom: 15%;
+      left: 15%;
+      animation-delay: 10s;
+    }
+
+    @keyframes gentleFloat {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+      }
+      33% {
+        transform: translate(30px, -30px) rotate(120deg) scale(1.1);
+      }
+      66% {
+        transform: translate(-20px, 20px) rotate(240deg) scale(0.9);
+      }
+    }
+
+    .auth-container {
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+      width: 100%;
+    }
+
+    .logo-link {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      font-size: 40px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--coral) 0%, var(--yellow) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.5));
+      display: inline-block;
+      transform: rotate(-1deg);
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: rotate(1deg) scale(1.05);
+    }
+
+    .form-bubble {
+      background: var(--dark-surface);
+      padding: 50px;
+      border-radius: 40px;
+      border: 4px solid var(--mint);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 60px rgba(81, 207, 102, 0.3);
+      transform: rotate(0.5deg);
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      position: relative;
+    }
+
+    .form-bubble::before {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 60px;
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-top: 20px solid var(--dark-surface);
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+    }
+
+    .form-bubble:hover {
+      transform: rotate(0deg) translateY(-5px);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 80px rgba(81, 207, 102, 0.4);
+    }
+
+    h1 {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text);
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: var(--text-dim);
+      text-align: center;
+      margin-bottom: 35px;
+      font-weight: 500;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 18px 45px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      border: 4px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      background: var(--mint);
+      color: var(--dark-bg);
+      box-shadow: 0 0 30px rgba(81, 207, 102, 0.5);
+      border-color: var(--mint-bright);
+      transform: rotate(0.5deg);
+    }
+
+    .btn:hover {
+      background: var(--mint-bright);
+      transform: rotate(-0.5deg) scale(1.05) translateY(-3px);
+      box-shadow: 0 0 50px rgba(81, 207, 102, 0.8);
+    }
+
+    .btn:active {
+      transform: rotate(0deg) scale(0.98);
+    }
+
+    .alert {
+      padding: 15px 20px;
+      border-radius: 20px;
+      margin-bottom: 25px;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .alert-error {
+      background: rgba(255, 107, 107, 0.2);
+      border: 2px solid var(--coral);
+      color: var(--coral-bright);
+    }
+
+    .alert-info {
+      background: rgba(81, 207, 102, 0.2);
+      border: 2px solid var(--mint);
+      color: var(--mint-bright);
+    }
+  </style>
+</head>
+<body>
+  <div class="animated-bg">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+  </div>
+
+  <div class="auth-container">
+    <a href="/" class="logo-link">
+      <div class="logo">SupaBOM ✨</div>
+    </a>
+
+    <div class="form-bubble">
+      <h1>Confirm Sign In 🔐</h1>
+      <p class="subtitle">Click the button below to complete your sign in</p>
+
+      <%= if @flash["error"] do %>
+        <div class="alert alert-error">
+          <%= @flash["error"] %>
+        </div>
+      <% end %>
+
+      <%= if @flash["info"] do %>
+        <div class="alert alert-info">
+          <%= @flash["info"] %>
+        </div>
+      <% end %>
+
+      <.form for={@conn} action={@action} method="post">
+        <%= if @token do %>
+          <input type="hidden" name="token" value={@token} />
+        <% end %>
+
+        <button type="submit" class="btn">
+          Complete Sign In 🚀
+        </button>
+      </.form>
+    </div>
+  </div>
+</body>
+</html>
