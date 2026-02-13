@@ -1,19 +1,29 @@
-// For Phoenix.HTML support, including form and button helpers
-// copy the following scripts into your javascript bundle:
-// * deps/phoenix_html/priv/static/phoenix_html.js
+// LiveView configuration
+// The phoenix.min.js and phoenix_live_view.min.js files are loaded before this script
+// and provide the global Phoenix and LiveView objects
 
-// For Phoenix.Channels support, copy the following scripts
-// into your javascript bundle:
-// * deps/phoenix/priv/static/phoenix.js
+(function() {
+  // Get CSRF token from meta tag
+  let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 
-// For Phoenix.LiveView support, copy the following scripts
-// into your javascript bundle:
-// * deps/phoenix_live_view/priv/static/phoenix_live_view.js
-
-// Handle flash close
-// (you can safely remove this if you don't use the default flash component)
-document.querySelectorAll("[role=alert][data-flash]").forEach((el) => {
-  el.addEventListener("click", () => {
-    el.setAttribute("hidden", "");
+  // Create LiveSocket using global objects
+  let liveSocket = new window.LiveView.LiveSocket("/live", window.Phoenix.Socket, {
+    longPollFallbackMs: 2500,
+    params: {_csrf_token: csrfToken}
   });
-});
+
+  // Connect the LiveSocket
+  liveSocket.connect();
+
+  // Expose liveSocket on window for web console debug logs
+  window.liveSocket = liveSocket;
+
+  // Handle flash close
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll("[role=alert][data-flash]").forEach(function(el) {
+      el.addEventListener("click", function() {
+        el.setAttribute("hidden", "");
+      });
+    });
+  });
+})();

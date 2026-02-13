@@ -47,6 +47,9 @@ defmodule SupabomWeb.Router do
     pipe_through [:browser, :require_authenticated_user]
 
     get "/dashboard", DashboardController, :index
+    live "/projects", ProjectIndexLive, :index
+    live "/projects/new", ProjectNewLive, :new
+    live "/projects/:id", ProjectShowLive, :show
   end
 
   # Other scopes may use custom stacks.

@@ -8,7 +8,11 @@
       "Bash(mix ecto.migrate:*)",
       "Bash(mix compile:*)",
       "Bash(mix phx.server:*)",
-      "Bash(mix phx.routes:*)"
+      "Bash(mix phx.routes:*)",
+      "Bash(mix format:*)",
+      "Bash(mix test:*)",
+      "Bash(mix clean:*)",
+      "Bash(mix precommit:*)"
     ]
   }
 }

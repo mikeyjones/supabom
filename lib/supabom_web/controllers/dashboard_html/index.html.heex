@@ -219,6 +219,10 @@
         transform: rotate(-0.5deg);
         transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        text-decoration: none;
+        display: block;
+        color: inherit;
+        cursor: pointer;
       }
 
       .project-card:hover {
@@ -239,6 +243,42 @@
         color: var(--text-dim);
         line-height: 1.6;
         font-weight: 500;
+      }
+
+      .project-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .ecosystem-badge {
+        background: var(--mint);
+        color: var(--dark-bg);
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .project-version {
+        font-weight: 600;
+        color: var(--text);
+        font-size: 15px;
+      }
+
+      .project-elixir {
+        font-size: 14px;
+        color: var(--text-dim);
+        margin-top: 8px;
+        margin-bottom: 8px;
+      }
+
+      .project-date {
+        font-size: 14px;
+        color: var(--text-dim);
       }
 
       .empty-state {
@@ -326,17 +366,44 @@
         <h1>Your Projects 🚀</h1>
         <p class="subtitle">Manage your SBOM scans and security reports</p>
 
-        <div class="empty-state">
-          <div class="empty-state-icon">📦</div>
-          <h2>No Projects Yet</h2>
-          <p>Get started by creating your first project and scanning your dependencies!</p>
-          <a href="#" class="btn">Create Your First Project ✨</a>
-        </div>
-        
-<!-- Future: projects grid will go here -->
-        <div class="projects-grid" style="display: none;">
-          <!-- Projects will be listed here -->
-        </div>
+        <%= if @projects == [] do %>
+          <div class="empty-state">
+            <div class="empty-state-icon">📦</div>
+            <h2>No Projects Yet</h2>
+            <p>Get started by creating your first project and scanning your dependencies!</p>
+            <a href={~p"/projects/new"} class="btn">Create Your First Project ✨</a>
+          </div>
+        <% else %>
+          <div class="projects-grid">
+            <%= for project <- @projects do %>
+              <a href={~p"/projects/#{project.id}"} class="project-card">
+                <h3>{project.name}</h3>
+                <p class="project-meta">
+                  <span class="ecosystem-badge">{project.ecosystem}</span>
+                  <%= if project.project_version do %>
+                    <span class="project-version">v{project.project_version}</span>
+                  <% end %>
+                </p>
+                <%= if project.elixir_version do %>
+                  <p class="project-elixir">Elixir {project.elixir_version}</p>
+                <% end %>
+                <p class="project-date">
+                  {Calendar.strftime(project.inserted_at, "%b %d, %Y")}
+                </p>
+              </a>
+            <% end %>
+          </div>
+
+          <div style="text-align: center; margin-top: 40px;">
+            <a
+              href={~p"/projects"}
+              class="btn"
+              style="background: var(--purple); border-color: var(--purple-bright);"
+            >
+              View All Projects →
+            </a>
+          </div>
+        <% end %>
       </main>
     </div>
   </body>

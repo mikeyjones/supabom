@@ -35,35 +35,134 @@ defmodule SupabomWeb.Layouts do
 
   def app(assigns) do
     ~H"""
-    <header class="navbar px-4 sm:px-6 lg:px-8">
-      <div class="flex-1">
-        <a href="/" class="flex-1 flex w-fit items-center gap-2">
-          <img src={~p"/images/logo.svg"} width="36" />
-          <span class="text-sm font-semibold">v{Application.spec(:phoenix, :vsn)}</span>
-        </a>
-      </div>
-      <div class="flex-none">
-        <ul class="flex flex-column px-1 space-x-4 items-center">
-          <li>
-            <a href="https://phoenixframework.org/" class="btn btn-ghost">Website</a>
-          </li>
-          <li>
-            <a href="https://github.com/phoenixframework/phoenix" class="btn btn-ghost">GitHub</a>
-          </li>
-          <li>
-            <a href="https://hexdocs.pm/phoenix/overview.html" class="btn btn-primary">
-              Get Started <span aria-hidden="true">&rarr;</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </header>
+    <style>
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 30px;
+        position: relative;
+        z-index: 1;
+      }
 
-    <main class="px-4 py-20 sm:px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl space-y-4">
+      header {
+        padding: 30px 0;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--dark-surface);
+        padding: 20px 35px;
+        border-radius: 60px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 0 3px var(--purple);
+        transform: rotate(-0.5deg);
+        transition: all 0.3s ease;
+      }
+
+      nav:hover {
+        transform: rotate(0deg) translateY(-2px);
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), 0 0 20px var(--purple);
+      }
+
+      .logo-link {
+        text-decoration: none;
+      }
+
+      .logo {
+        font-size: 32px;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--coral) 0%, var(--yellow) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        transform: rotate(2deg);
+        transition: transform 0.3s ease;
+        filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.5));
+      }
+
+      .logo:hover {
+        transform: rotate(-2deg) scale(1.05);
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .user-info {
+        color: var(--text-dim);
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 15px;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--text);
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        padding: 8px 18px;
+        border-radius: 20px;
+        border: 2px solid transparent;
+      }
+
+      .nav-links a:hover {
+        border-color: var(--coral);
+        background: var(--coral);
+        color: white;
+        transform: scale(1.05);
+      }
+
+      .main-content {
+        padding: 40px 0;
+      }
+
+      .page-title {
+        font-size: 48px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: var(--text);
+      }
+
+      .page-subtitle {
+        font-size: 18px;
+        color: var(--text-dim);
+        margin-bottom: 30px;
+        font-weight: 500;
+      }
+    </style>
+
+    <div class="container">
+      <header>
+        <nav>
+          <a href="/" class="logo-link">
+            <div class="logo">SupaBOM ✨</div>
+          </a>
+          <div class="nav-right">
+            <span class="user-info">
+              <%= if assigns[:current_user] do %>
+                {assigns[:current_user].email}
+              <% end %>
+            </span>
+            <ul class="nav-links">
+              <li><a href="/sign-out">Sign Out</a></li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+
+      <main class="main-content">
         {render_slot(@inner_block)}
-      </div>
-    </main>
+      </main>
+    </div>
 
     <.flash_group flash={@flash} />
     """
