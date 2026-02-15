@@ -77,6 +77,12 @@ defmodule Supabom.Accounts.User do
           :ok
         end)
       end
+
+      github do
+        client_id(Supabom.Accounts.Secrets)
+        client_secret(Supabom.Accounts.Secrets)
+        redirect_uri(Supabom.Accounts.Secrets)
+      end
     end
   end
 
@@ -112,6 +118,27 @@ defmodule Supabom.Accounts.User do
     update :update do
       accept([:email])
       primary?(true)
+    end
+
+    create :register_with_github do
+      argument(:user_info, :map, allow_nil?: false)
+      argument(:oauth_tokens, :map, allow_nil?: false)
+
+      upsert?(true)
+      upsert_identity(:unique_email)
+
+      change(AshAuthentication.GenerateTokenChange)
+
+      change(fn changeset, _ ->
+        user_info = Ash.Changeset.get_argument(changeset, :user_info)
+        email = Map.get(user_info, "email") || Map.get(user_info, :email)
+
+        if email do
+          Ash.Changeset.change_attribute(changeset, :email, email)
+        else
+          changeset
+        end
+      end)
     end
   end
 

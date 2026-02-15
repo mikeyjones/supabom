@@ -1,6 +1,6 @@
-defmodule Supabom.Projects.Dependency do
+defmodule Supabom.Projects.ProjectVersion do
   @moduledoc """
-  Parsed dependency entry from an uploaded lockfile.
+  Project version resource for tracking version history of uploaded dependency manifests.
   """
 
   use Ash.Resource,
@@ -8,26 +8,30 @@ defmodule Supabom.Projects.Dependency do
     data_layer: AshPostgres.DataLayer
 
   postgres do
-    table("project_dependencies")
+    table("project_versions")
     repo(Supabom.Repo)
   end
 
   attributes do
     uuid_primary_key(:id)
 
-    attribute :package, :string do
+    attribute :version_number, :integer do
       allow_nil?(false)
       public?(true)
     end
 
-    attribute :version, :string do
-      allow_nil?(false)
+    attribute :project_version, :string do
+      allow_nil?(true)
       public?(true)
     end
 
-    attribute :manager, :string do
-      allow_nil?(false)
-      default("hex")
+    attribute :elixir_version, :string do
+      allow_nil?(true)
+      public?(true)
+    end
+
+    attribute :uploaded_at, :utc_datetime_usec do
+      default(&DateTime.utc_now/0)
       public?(true)
     end
 
@@ -42,9 +46,7 @@ defmodule Supabom.Projects.Dependency do
       public?(true)
     end
 
-    belongs_to :project_version, Supabom.Projects.ProjectVersion do
-      allow_nil?(true)
-      attribute_writable?(true)
+    has_many :dependencies, Supabom.Projects.Dependency do
       public?(true)
     end
   end
@@ -53,12 +55,7 @@ defmodule Supabom.Projects.Dependency do
     defaults([:read, :destroy])
 
     create :create do
-      accept([:package, :version, :manager, :project_id, :project_version_id])
-      primary?(true)
-    end
-
-    update :update do
-      accept([:package, :version, :manager])
+      accept([:project_id, :version_number, :project_version, :elixir_version])
       primary?(true)
     end
   end

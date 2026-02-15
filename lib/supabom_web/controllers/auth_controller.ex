@@ -27,18 +27,31 @@ defmodule SupabomWeb.AuthController do
   end
 
   def success(conn, activity, user_or_email, token) do
-    if request_activity?(activity) do
-      redirect_to_sign_in(conn, activity, user_or_email, token)
-    else
-      user = user_or_email
-      return_to = get_session(conn, :return_to) || ~p"/dashboard"
+    cond do
+      request_activity?(activity) ->
+        redirect_to_sign_in(conn, activity, user_or_email, token)
 
-      conn
-      |> delete_session(:return_to)
-      |> store_in_session(user)
-      |> assign(:current_user, user)
-      |> put_flash(:info, "Welcome! 🎉")
-      |> redirect(to: return_to)
+      github_activity?(activity) ->
+        user = user_or_email
+        return_to = get_session(conn, :return_to) || ~p"/dashboard"
+
+        conn
+        |> delete_session(:return_to)
+        |> store_in_session(user)
+        |> assign(:current_user, user)
+        |> put_flash(:info, "Welcome! 🎉")
+        |> redirect(to: return_to)
+
+      true ->
+        user = user_or_email
+        return_to = get_session(conn, :return_to) || ~p"/dashboard"
+
+        conn
+        |> delete_session(:return_to)
+        |> store_in_session(user)
+        |> assign(:current_user, user)
+        |> put_flash(:info, "Welcome! 🎉")
+        |> redirect(to: return_to)
     end
   end
 
@@ -70,4 +83,11 @@ defmodule SupabomWeb.AuthController do
   defp request_activity?(:request), do: true
   defp request_activity?("request"), do: true
   defp request_activity?(_), do: false
+
+  defp github_activity?(%{strategy: AshAuthentication.Strategy.OAuth2}), do: true
+  defp github_activity?(%{name: :github}), do: true
+  defp github_activity?({:github, _}), do: true
+  defp github_activity?(:github), do: true
+  defp github_activity?("github"), do: true
+  defp github_activity?(_), do: false
 end

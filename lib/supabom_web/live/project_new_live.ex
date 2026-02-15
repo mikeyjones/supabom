@@ -5,6 +5,7 @@ defmodule SupabomWeb.ProjectNewLive do
   alias Supabom.Projects.MixExsParser
   alias Supabom.Projects.MixLockParser
   alias Supabom.Projects.Project
+  alias Supabom.Projects.ProjectVersion
 
   @impl true
   def mount(_params, _session, socket) do
@@ -263,7 +264,8 @@ defmodule SupabomWeb.ProjectNewLive do
     with {:ok, dependencies} <- extract_dependencies(lockfile_results),
          {:ok, metadata} <- extract_metadata(mixexs_results),
          {:ok, project} <- create_project(name, metadata),
-         :ok <- create_dependencies(project.id, dependencies) do
+         {:ok, version} <- create_initial_version(project, metadata),
+         :ok <- create_dependencies(project.id, version.id, dependencies) do
       {:noreply,
        socket
        |> put_flash(:info, "Project created successfully")
@@ -317,11 +319,28 @@ defmodule SupabomWeb.ProjectNewLive do
     end
   end
 
-  defp create_dependencies(project_id, dependencies) do
+  defp create_initial_version(project, metadata) do
+    version_attrs = %{
+      project_id: project.id,
+      version_number: 1,
+      project_version: metadata.project_version,
+      elixir_version: metadata.elixir_version
+    }
+
+    case ProjectVersion
+         |> Ash.Changeset.for_create(:create, version_attrs)
+         |> Ash.create(authorize?: false) do
+      {:ok, version} -> {:ok, version}
+      {:error, _error} -> {:error, "Could not create initial version"}
+    end
+  end
+
+  defp create_dependencies(project_id, version_id, dependencies) do
     result =
       Enum.reduce_while(dependencies, :ok, fn dependency, :ok ->
         params = %{
           project_id: project_id,
+          project_version_id: version_id,
           package: dependency.package,
           version: dependency.version,
           manager: dependency.manager

@@ -8,5 +8,6 @@ defmodule Supabom.Projects do
   resources do
     resource(Supabom.Projects.Project)
     resource(Supabom.Projects.Dependency)
+    resource(Supabom.Projects.ProjectVersion)
   end
 end

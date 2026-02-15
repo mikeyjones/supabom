@@ -47,6 +47,11 @@ defmodule Supabom.Projects.Project do
 
   relationships do
     has_many(:dependencies, Supabom.Projects.Dependency)
+
+    has_many :versions, Supabom.Projects.ProjectVersion do
+      sort(version_number: :desc)
+      public?(true)
+    end
   end
 
   actions do

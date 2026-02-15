@@ -87,3 +87,10 @@ config :phoenix_live_view,
 
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false
+
+# GitHub OAuth configuration for development
+# Create your OAuth app at https://github.com/settings/developers
+# Set the Authorization callback URL to: http://localhost:4000/auth/user/github/callback
+config :supabom, :github,
+  client_id: System.get_env("GITHUB_CLIENT_ID") || "your_github_client_id",
+  client_secret: System.get_env("GITHUB_CLIENT_SECRET") || "your_github_client_secret"
