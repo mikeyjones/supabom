@@ -1,54 +1,41 @@
 defmodule SupabomWeb.ProjectShowLiveTest do
-  use SupabomWeb.ConnCase, async: true
+  use SupabomWeb.ConnCase, async: false
 
   import Phoenix.LiveViewTest
 
   alias Supabom.Projects.Dependency
   alias Supabom.Projects.Project
   alias Supabom.Projects.ProjectVersion
+  alias Supabom.Projects.RepositoryConnection
 
-  test "renders dependency table for project", %{conn: conn} do
+  setup do
+    previous_client = Application.get_env(:supabom, :github_client)
+    previous_response = Application.get_env(:supabom, :github_client_mock_response)
+
+    Application.put_env(:supabom, :github_client, Supabom.TestSupport.GitHubClientMock)
+    Application.delete_env(:supabom, :github_client_mock_response)
+
+    on_exit(fn ->
+      if previous_client do
+        Application.put_env(:supabom, :github_client, previous_client)
+      else
+        Application.delete_env(:supabom, :github_client)
+      end
+
+      if previous_response do
+        Application.put_env(:supabom, :github_client_mock_response, previous_response)
+      else
+        Application.delete_env(:supabom, :github_client_mock_response)
+      end
+    end)
+
+    :ok
+  end
+
+  test "renders dependency table for current version", %{conn: conn} do
     {:ok, project} =
       Project
       |> Ash.Changeset.for_create(:create, %{name: "Demo Project", ecosystem: "elixir"})
-      |> Ash.create(authorize?: false)
-
-    {:ok, _dependency} =
-      Dependency
-      |> Ash.Changeset.for_create(:create, %{
-        project_id: project.id,
-        package: "phoenix",
-        version: "1.8.3",
-        manager: "hex"
-      })
-      |> Ash.create(authorize?: false)
-
-    {:ok, view, _html} =
-      live_isolated(conn, SupabomWeb.ProjectShowLive, session: %{"id" => project.id})
-
-    # Dependencies should be collapsed by default
-    refute has_element?(view, "#dependencies-table")
-    assert render(view) =~ "1 packages"
-
-    # Expand the dependencies
-    view |> element(".dependency-summary-card") |> render_click()
-
-    # Now the table should be visible
-    assert has_element?(view, "#dependencies-table")
-    assert render(view) =~ "phoenix"
-    assert render(view) =~ "1.8.3"
-
-    # Collapse the dependencies again
-    view |> element(".dependency-summary-card") |> render_click()
-
-    # Table should be hidden again
-    refute has_element?(view, "#dependencies-table")
-  end
-
-  test "shows upload new version button and modal", %{conn: conn} do
-    {:ok, project} =
-      Project
-      |> Ash.Changeset.for_create(:create, %{name: "Test Project", ecosystem: "elixir"})
       |> Ash.create(authorize?: false)
 
     {:ok, version} =
@@ -57,7 +44,7 @@ defmodule SupabomWeb.ProjectShowLiveTest do
         project_id: project.id,
         version_number: 1,
         project_version: "1.0.0",
-        elixir_version: "1.15.0"
+        elixir_version: "~> 1.15"
       })
       |> Ash.create(authorize?: false)
 
@@ -73,61 +60,76 @@ defmodule SupabomWeb.ProjectShowLiveTest do
       |> Ash.create(authorize?: false)
 
     {:ok, view, _html} =
-      live_isolated(conn, SupabomWeb.ProjectShowLive, session: %{"id" => project.id})
+      live_isolated(conn, SupabomWeb.ProjectShowLive,
+        session: %{"id" => project.id, "github_installation_id" => "123"}
+      )
 
-    # Upload button should be present
-    assert has_element?(view, "#upload-new-lockfile-btn", "Upload New Version")
-
-    # Version info should be displayed (shows project_version from mix.exs)
-    assert has_element?(view, ".version-badge", "Version 1.0.0")
-
-    # Modal should not be visible initially
-    refute has_element?(view, "#upload-modal")
-
-    # Click the upload button to open modal
-    view |> element("#upload-new-lockfile-btn") |> render_click()
-
-    # Modal should now be visible
-    assert has_element?(view, "#upload-modal")
-    assert has_element?(view, ".modal-header h2", "Upload New Version")
-    assert has_element?(view, "#version-upload-form")
-
-    # Close modal using the X button
-    view |> element(".modal-close") |> render_click()
-
-    # Modal should be hidden again
-    refute has_element?(view, "#upload-modal")
+    assert has_element?(view, "#dependencies-table")
+    assert render(view) =~ "phoenix"
+    assert render(view) =~ "1.8.3"
   end
 
-  test "upload version form registers mix.lock selection", %{conn: conn} do
+  test "saves repository connection from form", %{conn: conn} do
+    {:ok, project} =
+      Project
+      |> Ash.Changeset.for_create(:create, %{name: "Test Project", ecosystem: "elixir"})
+      |> Ash.create(authorize?: false)
+
+    {:ok, view, _html} =
+      live_isolated(conn, SupabomWeb.ProjectShowLive,
+        session: %{"id" => project.id, "github_installation_id" => "321"}
+      )
+
+    view
+    |> element("#repo-connection-form")
+    |> render_submit(%{"repo" => %{"repository" => "elixir-lang/elixir"}})
+
+    connection =
+      RepositoryConnection
+      |> Ash.read!(authorize?: false)
+      |> Enum.find(&(&1.project_id == project.id))
+
+    assert connection
+    assert connection.owner == "elixir-lang"
+    assert connection.repo == "elixir"
+    assert connection.installation_id == 321
+  end
+
+  test "imports a new version from github connection", %{conn: conn} do
     {:ok, project} =
       Project
       |> Ash.Changeset.for_create(:create, %{name: "Upload Project", ecosystem: "elixir"})
       |> Ash.create(authorize?: false)
 
+    {:ok, _connection} =
+      RepositoryConnection
+      |> Ash.Changeset.for_create(:create, %{
+        project_id: project.id,
+        provider: "github",
+        owner: "elixir-lang",
+        repo: "elixir",
+        installation_id: 55
+      })
+      |> Ash.create(authorize?: false)
+
     {:ok, view, _html} =
       live_isolated(conn, SupabomWeb.ProjectShowLive, session: %{"id" => project.id})
 
-    view |> element("#upload-new-lockfile-btn") |> render_click()
+    view |> element("#import-github-btn") |> render_click()
+    assert_redirect(view)
 
-    upload =
-      file_input(view, "#version-upload-form", :lockfile, [
-        %{
-          name: "mix.lock",
-          content: """
-          %{
-            "jason" => {:hex, :jason, "1.4.4", "hash", [:mix], [], "hexpm", "outer"}
-          }
-          """,
-          type: "text/plain"
-        }
-      ])
+    project_version =
+      ProjectVersion
+      |> Ash.read!(authorize?: false)
+      |> Enum.find(&(&1.project_id == project.id))
 
-    assert render_upload(upload, "mix.lock")
+    assert project_version
 
-    view |> element("#version-upload-form") |> render_submit(%{})
+    dependencies =
+      Dependency
+      |> Ash.read!(authorize?: false)
+      |> Enum.filter(&(&1.project_id == project.id))
 
-    # If lockfile upload registered, the next blocking validation is mix.exs.
-    assert render(view) =~ "Please select a mix.exs file to upload"
+    assert Enum.any?(dependencies, &(&1.package == "jason"))
   end
 end

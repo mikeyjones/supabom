@@ -9,5 +9,6 @@ defmodule Supabom.Projects do
     resource(Supabom.Projects.Project)
     resource(Supabom.Projects.Dependency)
     resource(Supabom.Projects.ProjectVersion)
+    resource(Supabom.Projects.RepositoryConnection)
   end
 end

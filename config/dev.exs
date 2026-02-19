@@ -94,3 +94,8 @@ config :swoosh, :api_client, false
 config :supabom, :github,
   client_id: System.get_env("GITHUB_CLIENT_ID") || "your_github_client_id",
   client_secret: System.get_env("GITHUB_CLIENT_SECRET") || "your_github_client_secret"
+
+config :supabom, :github_app,
+  app_id: System.get_env("GITHUB_APP_ID") || "",
+  private_key: System.get_env("GITHUB_APP_PRIVATE_KEY") || "",
+  install_url: System.get_env("GITHUB_APP_INSTALL_URL") || ""

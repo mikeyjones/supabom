@@ -10,7 +10,8 @@ import Config
 config :supabom,
   ecto_repos: [Supabom.Repo],
   generators: [timestamp_type: :utc_datetime],
-  ash_domains: [Supabom.Accounts, Supabom.Projects]
+  ash_domains: [Supabom.Accounts, Supabom.Projects],
+  github_client: Supabom.Integrations.GitHub.Client
 
 # Configure the endpoint
 config :supabom, SupabomWeb.Endpoint,

@@ -52,6 +52,10 @@ defmodule Supabom.Projects.Project do
       sort(version_number: :desc)
       public?(true)
     end
+
+    has_one :repository_connection, Supabom.Projects.RepositoryConnection do
+      public?(true)
+    end
   end
 
   actions do
@@ -63,7 +67,7 @@ defmodule Supabom.Projects.Project do
     end
 
     update :update do
-      accept([:name, :ecosystem])
+      accept([:name, :ecosystem, :project_version, :elixir_version])
       primary?(true)
     end
   end

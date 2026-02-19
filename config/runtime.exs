@@ -122,4 +122,9 @@ if config_env() == :prod do
   config :supabom, :github,
     client_id: System.get_env("GITHUB_CLIENT_ID"),
     client_secret: System.get_env("GITHUB_CLIENT_SECRET")
+
+  config :supabom, :github_app,
+    app_id: System.get_env("GITHUB_APP_ID"),
+    private_key: System.get_env("GITHUB_APP_PRIVATE_KEY"),
+    install_url: System.get_env("GITHUB_APP_INSTALL_URL")
 end

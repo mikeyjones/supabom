@@ -47,6 +47,8 @@ defmodule SupabomWeb.Router do
     pipe_through [:browser, :require_authenticated_user]
 
     get "/dashboard", DashboardController, :index
+    get "/github/connect", GitHubConnectionController, :connect
+    get "/github/callback", GitHubConnectionController, :callback
     live "/projects", ProjectIndexLive, :index
     live "/projects/new", ProjectNewLive, :new
     live "/projects/:id", ProjectShowLive, :show
