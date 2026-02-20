@@ -5,6 +5,7 @@ import Config
 # Note `:force_ssl` is required to be set at compile-time.
 config :supabom, SupabomWeb.Endpoint,
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
+  server: true,
   exclude: [
     # paths: ["/health"],
     hosts: ["localhost", "127.0.0.1"]
